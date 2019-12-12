@@ -1,28 +1,41 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Notes</h1>
+    <input v-model="title" type="text" name="title" id="note-title" placeholder="Enter title here"> <br/>
+    <textarea v-model="content" name="content" id="note-content" cols="40" rows="8" placeholder="Type note here"></textarea> <button @click="submitNote" id="submit-note">Add note</button>
+    <p>Your notes:</p>
+    <ul id="notes">
+      <li :key="index" v-for="(note, index) in notes"> {{note.title}} - {{note.body}} </li>
+    </ul>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
-  }
+  data() {
+    return {
+      title: '',
+      content: '',
+      notes: []
+    }
+  },
+  methods: {
+    submitNote() {
+      this.notes.push({
+        title: this.title,
+        body: this.content
+      });
+      this.title = '',
+      this.content = ''
+    }
+   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+#notes li{
+  white-space: pre-wrap;
 }
 </style>
