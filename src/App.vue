@@ -36,6 +36,6 @@ export default {
 
 <style>
 #notes li{
-  white-space: pre-wrap;
+  white-space: pre;
 }
 </style>
