@@ -5,7 +5,7 @@
     <textarea v-model="content" name="content" id="note-content" cols="40" rows="8" placeholder="Type note here"></textarea> <button @click="submitNote" id="submit-note">Add note</button>
     <p>Your notes:</p>
     <ul id="notes">
-      <li :key="index" v-for="(note, index) in notes"> 
+      <li :key="index" v-for="(note, index) in sortedNotes"> 
         <h3>{{note.title}}</h3>
         <p>{{note.content}}</p>
       </li>
@@ -36,9 +36,14 @@ export default {
         this.notes.push(dbNote)
       })
     })
-    this.sortNotes();
     console.log(this.notes);
     // this.notes.sort((a, b) => a.date.getTime() - b.date.getTime());
+  },
+  computed: {
+    sortedNotes() {
+      // this.sortNotes()
+      return this.notes.sort((a, b) => (a.title > b.title) ? 1 : -1)
+    }
   },
   methods: {
     submitNote() {
@@ -57,7 +62,7 @@ export default {
       }
     },
     sortNotes() {
-      this.notes = this.notes.sort((a, b) => (a.title > b.title) ? 1 : -1);
+      this.notes = this.notes.sort((a, b) => (a.title > b.title) ? 1 : -1)
       console.log('Sorted')
     }
    }
