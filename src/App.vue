@@ -6,7 +6,7 @@
     <p>Your notes:</p>
     <ul id="notes">
       <li :key="index" v-for="(note, index) in sortedNotes"> 
-        <h3>{{note.title}}</h3>
+        <h3><button @click="deleteNote(note.title)">x</button> {{note.title}}</h3>
         <p>{{note.content}}</p>
       </li>
     </ul>
@@ -28,7 +28,9 @@ export default {
   },
   mounted() {
     db.collection('notes').get().then(query => {
+      // query.docs.map(doc => console.log(doc.data().title))
       query.forEach(doc => {
+        // console.log(doc.id)
         const dbNote = {
           title: doc.data().title,
           content: doc.data().content
@@ -36,13 +38,11 @@ export default {
         this.notes.push(dbNote)
       })
     })
-    console.log(this.notes);
-    // this.notes.sort((a, b) => a.date.getTime() - b.date.getTime());
   },
   computed: {
     sortedNotes() {
       // this.sortNotes()
-      return this.notes.sort((a, b) => (a.title > b.title) ? 1 : -1)
+      return this.notes.sort((a, b) => (a.title > b.title) ? 1 : -1) 
     }
   },
   methods: {
@@ -64,6 +64,19 @@ export default {
     sortNotes() {
       this.notes = this.notes.sort((a, b) => (a.title > b.title) ? 1 : -1)
       console.log('Sorted')
+    },
+    deleteNote(title) {
+      let docToDeleteId = ''
+      this.notes = this.notes.filter(note => {
+        return note.title !== title
+      })
+      
+      db.collection('notes').where("title", "==", title).get().then(query => {
+        query.docs.map(doc => {
+          docToDeleteId = doc.id;
+        })
+        db.collection('notes').doc(docToDeleteId).delete()
+      })
     }
    }
 }
