@@ -1,15 +1,19 @@
 <template>
   <div id="app">
-    <h1>Notes</h1>
-    <input v-model="title" type="text" name="title" id="note-title" placeholder="Enter title here"> <br/>
-    <textarea v-model="content" name="content" id="note-content" cols="40" rows="8" placeholder="Type note here"></textarea> <button @click="submitNote" id="submit-note">Add note</button>
-    <p>Your notes:</p>
-    <ul id="notes">
-      <li :key="index" v-for="(note, index) in sortedNotes"> 
-        <h3><button @click="deleteNote(note.title)">x</button> {{note.title}}</h3>
-        <p>{{note.content}}</p>
-      </li>
-    </ul>
+    <div id="notes-input">
+      <h1>Notes</h1>
+      <input v-model="title" type="text" name="title" id="note-title" placeholder="Enter title here"> <br/>
+      <textarea v-model="content" name="content" id="note-content" cols="40" rows="8" placeholder="Type note here"></textarea> <button @click="submitNote" id="submit-note">Add note</button>
+    </div>
+    <div id="notes-content">
+      <p>Your notes:</p>
+      <ul id="notes">
+        <li :key="index" v-for="(note, index) in sortedNotes"> 
+          <h3><button @click="deleteNote(note.title)">x</button> {{note.title}}</h3>
+          <p>{{note.content}}</p>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -41,7 +45,6 @@ export default {
   },
   computed: {
     sortedNotes() {
-      // this.sortNotes()
       return this.notes.sort((a, b) => (a.title > b.title) ? 1 : -1) 
     }
   },
@@ -83,7 +86,26 @@ export default {
 </script>
 
 <style>
+#notes-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 50%; 
+  width: 100%;
+  background-color: rgb(161, 26, 161);
+}
+
+#notes-content {
+  position: absolute;
+  top: calc(50% + 10px);
+}
+
 #notes li{
   white-space: pre-wrap;
+}
+
+#notes li p {
+  word-wrap: break-word;
+  padding-right: 25px;
 }
 </style>
