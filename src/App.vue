@@ -2,10 +2,13 @@
   <div id="app">
     <div id="notes-input">
       <h1>Notes</h1>
-      <input v-model="title" type="text" name="title" id="note-title" placeholder="Enter title here"> <br/>
-      <textarea v-model="content" name="content" id="note-content" cols="40" rows="8" placeholder="Type note here"></textarea> <button @click="submitNote" id="submit-note">Add note</button>
+      <div id="new-notes">
+        <input v-model="title" type="text" name="title" id="note-title" placeholder="Enter title here"> <br/>
+        <textarea v-model="content" name="content" id="note-content" cols="40" rows="8" placeholder="Type note here"></textarea> 
+      </div>
+      <button @click="submitNote" id="add-note">Add note</button>
     </div>
-    <div id="notes-content">
+    <div id="notes-display">
       <p>Your notes:</p>
       <ul id="notes">
         <li :key="index" v-for="(note, index) in sortedNotes"> 
@@ -85,27 +88,50 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+$input-height: 50%;
+$button-color: rgb(79, 131, 226);
+
 #notes-input {
   position: absolute;
   left: 0;
   top: 0;
-  height: 50%; 
+  height: $input-height; 
   width: 100%;
   background-color: rgb(161, 26, 161);
+  text-align: center;
 }
 
-#notes-content {
+h1 {
+  font-size: 3rem;
+}
+
+#note-title {
+  margin-bottom: 10px;
+}
+
+#add-note {
+  background-color: $button-color;
+  color: white;
+  border: 0.5px solid $button-color;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin-top: 5px;
+  font-size: 1em;
+}
+
+#notes-display {
   position: absolute;
-  top: calc(50% + 10px);
+  top: calc(#{$input-height} + 10px);
 }
 
-#notes li{
-  white-space: pre-wrap;
-}
-
-#notes li p {
-  word-wrap: break-word;
-  padding-right: 25px;
+#notes {
+  li {
+    white-space: pre-wrap;
+    p {
+      word-wrap: break-word;
+      padding-right: 25px;
+    }
+  }
 }
 </style>
