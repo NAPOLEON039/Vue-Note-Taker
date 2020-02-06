@@ -91,6 +91,7 @@ export default {
 <style lang="scss">
 $input-height: 50%;
 $button-color: rgb(79, 131, 226);
+$button-outline: rgb(134, 170, 236);
 
 #notes-input {
   position: absolute;
@@ -98,7 +99,7 @@ $button-color: rgb(79, 131, 226);
   top: 0;
   height: $input-height; 
   width: 100%;
-  background-color: rgb(161, 26, 161);
+  background-color: rgb(197, 112, 223);
   text-align: center;
 }
 
@@ -118,6 +119,12 @@ h1 {
   padding: 5px 15px;
   margin-top: 5px;
   font-size: 1em;
+}
+
+#add-note:focus {
+  outline-style: none;
+  box-shadow: 0 0 1pt 3pt $button-outline;
+  // outline-offset: 5px;
 }
 
 #notes-display {
