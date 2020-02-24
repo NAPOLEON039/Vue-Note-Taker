@@ -83,6 +83,17 @@ export default {
         })
         db.collection('notes').doc(docToDeleteId).delete()
       })
+    },
+    editNote(title, newContent) {
+      let noteId = ''
+      db.collection('notes').where("title", "==", title).get().then(query => {
+        query.docs.map(doc => {
+          noteId = doc.id;
+        })
+      })
+      db.collection('notes').doc('noteId').update({
+        content: newContent
+      })
     }
    }
 }
