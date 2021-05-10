@@ -23,6 +23,8 @@
 <script>
 import db from './firebaseInit';
 
+import Notes from './components/Notes'
+
 export default {
   name: 'app',
   data() {
@@ -32,6 +34,9 @@ export default {
       date: '',
       notes: []
     }
+  },
+  components: {
+    Notes
   },
   mounted() {
     db.collection('notes').get().then(query => {
@@ -99,18 +104,20 @@ export default {
 }
 </script>
 
-<style lang="scss">
-$input-height: 70vh;
-$add-note-button-color: rgb(79, 131, 226);
-$add-button-outline: rgb(134, 170, 236);
-$delete-note-button-color: rgb(211, 40, 40);
-$delete-note-button-outline: rgb(245, 138, 138);
+<style>
+:root {
+  --input-height: 70vh;
+  --add-note-button-color: rgb(79, 131, 226);
+  --add-button-outline: rgb(134, 170, 236);
+  --delete-note-button-color: rgb(211, 40, 40);
+  --delete-note-button-outline: rgb(245, 138, 138);
+}
 
 #notes-input {
   position: absolute;
   left: 0;
   top: 0;
-  height: $input-height; 
+  height: var(--input-height); 
   width: 100%;
   background-color: rgb(197, 112, 223);
   text-align: center;
@@ -129,10 +136,10 @@ h1 {
 
 #add-note {
   align-self: center;
-  background-color: $add-note-button-color;
+  background-color: var(--add-note-button-color);
   color: white;
   width: 100px;
-  border: 0.5px solid $add-note-button-color;
+  border: 0.5px solid var(--add-note-button-color);
   border-radius: 5px;
   padding: 5px 15px;
   margin-top: 5px;
@@ -141,13 +148,13 @@ h1 {
 
 #add-note:focus {
   outline-style: none;
-  box-shadow: 0 0 1pt 3pt $add-button-outline;
-  // outline-offset: 5px;
+  box-shadow: 0 0 1pt 3pt var(--add-button-outline);
+  /* // outline-offset: 5px; */
 }
 
 #notes-display {
   position: absolute;
-  top: calc(#{$input-height} + 10px);
+  top: calc(var(--input-height) + 10px);
 }
 
 #notes-display > p {
@@ -157,28 +164,30 @@ h1 {
 
 #notes {
   list-style: none;
-  li {
-    white-space: pre-wrap;
-    .title-display {
-      display: inline-block;
-    }
-    button {
-      background-color: $delete-note-button-color;
-      color: white;
-      width: 25px;
-      height: 30px;
-      border: 0.5px solid $delete-note-button-color;
-      border-radius: 5px;
-      margin-right: 15px;
-    }
-    button:focus {
-      outline-style: none;
-      box-shadow: 0 0 1pt 1.5pt $delete-note-button-outline;
-    }
-    p {
-      word-wrap: break-word;
-      padding-right: 25px;
-    }
+}
+
+#notes li {
+  white-space: pre-wrap;
+}
+
+#notes li .title-display {
+    display: inline-block;
   }
+#notes li button {
+  background-color: var(--delete-note-button-color);
+  color: white;
+  width: 25px;
+  height: 30px;
+  border: 0.5px solid var(--delete-note-button-color);
+  border-radius: 5px;
+  margin-right: 15px;
+}
+#notes li button:focus {
+  outline-style: none;
+  box-shadow: 0 0 1pt 1.5pt var(--delete-note-button-outline);
+}
+#notes li p {
+  word-wrap: break-word;
+  padding-right: 25px;
 }
 </style>
